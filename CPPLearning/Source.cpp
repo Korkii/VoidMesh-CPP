@@ -29,21 +29,30 @@ void handle_errors(error_code errorCode) {
 	}
 }
 
+/*
+Asks the user for a number, and returns it's square root.
+
+@return square root of the user input
+*/
+double my_sqrt() {
+	std::cout << "Please type a number: ";
+	int input_number = MINIMUM_POSITIVE_NUM;
+
+	if (!(std::cin >> input_number)) {
+		throw error_code::INPUT_FAIL;
+	}
+
+	if (input_number < MINIMUM_POSITIVE_NUM) {
+		throw error_code::NEGATIVE_INPUT;
+	}
+	return std::sqrt(input_number);
+}
+
 
 int main()
 {
 	try {
-		std::cout << "Please type a number: ";
-		int input_number = MINIMUM_POSITIVE_NUM;
-
-		if (!(std::cin >> input_number)) {
-			throw error_code::INPUT_FAIL;
-		}
-
-		if (input_number < MINIMUM_POSITIVE_NUM) {
-			throw error_code::NEGATIVE_INPUT;
-		}
-		std::cout << std::sqrt(input_number) << std::endl;
+		std::cout << my_sqrt() << std::endl;
 	}
 	catch (error_code errorCode) {
 		handle_errors(errorCode);
