@@ -10,7 +10,7 @@ const int ALLIGNMENT_MULTILPLIER = 10;
 /*
 Prints the multiplication table array
 */
-void print_multiplication_table() {
+void printMultiplicationTable() {
 	double max_identation = std::floor(std::log10((MULTIPLICATION_TABLE_SIZE * MULTIPLICATION_TABLE_SIZE)));
 	for (int i = STARTING_NUM; i < MULTIPLICATION_TABLE_SIZE + STARTING_NUM; i++) {
 		for (int j = STARTING_NUM; j < MULTIPLICATION_TABLE_SIZE + STARTING_NUM; j++) {
@@ -26,5 +26,5 @@ void print_multiplication_table() {
 
 int main()
 {
-	print_multiplication_table();
+	printMultiplicationTable();
 }
