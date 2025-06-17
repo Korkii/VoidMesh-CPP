@@ -1,17 +1,56 @@
 #include <iostream>
 
+#define MINIMUM_POSITIVE_NUM 0
+
+
+enum class error_code {
+	SUCCESS,
+	INPUT_FAIL,
+	NEGATIVE_INPUT,
+};
+
+/*
+Throws an input faid error code, used for when stdin isn't working
+*/
+void inputFailThrower() {
+	throw error_code::INPUT_FAIL;
+}
+
+/*
+Throws a negative input error code, used for trying to apply sqrt on negative numbers
+*/
+void negativeInputThrower() {
+	throw error_code::NEGATIVE_INPUT;
+}
+
+
+void handle_errors(error_code errorCode) {
+	if (errorCode == error_code::INPUT_FAIL)
+		std::cout << "Stdin not working properly" << std::endl;
+	else if (errorCode == error_code::NEGATIVE_INPUT)
+		std::cout << "Program cannot process negative numbers" << std::endl;
+}
 
 int main()
 {
-	std::cout << "Please type a number: ";
-	int input_number = 0;
+	try {
+		std::cout << "Please type a number: ";
+		int input_number = MINIMUM_POSITIVE_NUM;
 
-	std::cin >> input_number;
+		if (!std::cin) {
+			inputFailThrower();
+		}
 
-	if (input_number < 0) {
-		std::cout << "Program cannot process negative numbers" << std::endl;
-		return 1;
+		std::cin >> input_number;
+
+		if (input_number < MINIMUM_POSITIVE_NUM) {
+			negativeInputThrower();
+		}
+		std::cout << std::sqrt(input_number) << std::endl;
 	}
-	std::cout << std::sqrt(input_number) << std::endl;
+	catch (error_code errorCode) {
+		handle_errors(errorCode);
+	}
+
 	return 0;
 }
