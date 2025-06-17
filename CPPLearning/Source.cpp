@@ -23,7 +23,11 @@ void negativeInputThrower() {
 	throw error_code::NEGATIVE_INPUT;
 }
 
+/*
+Handles all error types
 
+@param errorCode Error code to take care of
+*/
 void handle_errors(error_code errorCode) {
 	if (errorCode == error_code::INPUT_FAIL)
 		std::cout << "Stdin not working properly" << std::endl;
