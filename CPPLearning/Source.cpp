@@ -9,6 +9,7 @@ enum class error_code {
 	NEGATIVE_INPUT,
 };
 
+
 /*
 Throws an input faid error code, used for when stdin isn't working
 */
@@ -16,12 +17,14 @@ void inputFailThrower() {
 	throw error_code::INPUT_FAIL;
 }
 
+
 /*
 Throws a negative input error code, used for trying to apply sqrt on negative numbers
 */
 void negativeInputThrower() {
 	throw error_code::NEGATIVE_INPUT;
 }
+
 
 /*
 Handles all error types
@@ -34,6 +37,7 @@ void handle_errors(error_code errorCode) {
 	else if (errorCode == error_code::NEGATIVE_INPUT)
 		std::cout << "Program cannot process negative numbers" << std::endl;
 }
+
 
 int main()
 {
