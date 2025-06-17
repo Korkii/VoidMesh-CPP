@@ -29,6 +29,7 @@ void handle_errors(error_code errorCode) {
 	}
 }
 
+
 /*
 Asks the user for a number, and returns it's square root.
 
