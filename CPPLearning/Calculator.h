@@ -2,7 +2,6 @@
 
 class Calculator {
 public:
-	Calculator();
 	
 	// Basicl Functionality
 	double add(double num1, double num2);
