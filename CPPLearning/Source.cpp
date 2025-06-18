@@ -10,6 +10,7 @@ enum error_code {
 	SUCCESS,
 	BAD_INPUT,
 	NEGATIVE_COUNT,
+	NULL_PTR_ACCESS,
 };
 
 
@@ -25,6 +26,9 @@ void handleError(error_code errorCode) {
 		break;
 	case error_code::NEGATIVE_COUNT:
 		std::cout << "Negative or zero count" << std::endl;
+		break;
+	case error_code::NULL_PTR_ACCESS:
+		std::cout << "Null pointer access" << std::endl;
 		break;
 	default:
 		std::cout << "Invalid errorcode" << std::endl;
@@ -57,13 +61,23 @@ Fills an array arr in num primes.
 @param arr Pointer to an array to fill in prime numbers
 */
 void fill_prime(int num, int** arr) {
+	if (num <= 0)
+		throw error_code::NEGATIVE_COUNT;
+
 	int prime_count = 0;
 
-	(*arr)[prime_count] = MIN_PRIME;
-	prime_count++; 
-
-	for (int i = MIN_ODD_PRIME; prime_count != num; i += PARITY_OFFSET) {
+	for (int i = 2; prime_count != num; i += PARITY_OFFSET) {
+		if (i == 2) {
+			if (!((*arr)[prime_count]))
+				throw error_code::NULL_PTR_ACCESS;
+			(*arr)[prime_count] = i;
+			prime_count++;
+			i++;
+			continue;
+		}
 		if (isPrime(i)) {
+			if (!((*arr)[prime_count]))
+				throw error_code::NULL_PTR_ACCESS;
 			(*arr)[prime_count] = i;
 			prime_count++;
 		}
@@ -91,6 +105,8 @@ int main()
 		for (int i = 0; i < number_input; i++) {
 			std::cout << arr[i] << " ";
 		}
+		
+		free(arr);
 	}
 	catch (error_code errorCode) {
 		handleError(errorCode);
