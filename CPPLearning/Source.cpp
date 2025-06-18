@@ -10,7 +10,7 @@ enum error_code {
 	SUCCESS,
 	BAD_INPUT,
 	NEGATIVE_COUNT,
-	NULL_PTR_ACCESS,
+	NULL_PTR,
 };
 
 
@@ -27,7 +27,7 @@ void handleError(error_code errorCode) {
 	case error_code::NEGATIVE_COUNT:
 		std::cout << "Negative or zero count" << std::endl;
 		break;
-	case error_code::NULL_PTR_ACCESS:
+	case error_code::NULL_PTR:
 		std::cout << "Null pointer access" << std::endl;
 		break;
 	default:
@@ -60,53 +60,62 @@ Fills an array arr in num primes.
 @param num Integer representing the number of prime numbers to find
 @param arr Pointer to an array to fill in prime numbers
 */
-void fill_prime(int num, int** arr) {
+void fill_prime(int num, int* arr) {
+	if (arr == nullptr)
+		throw error_code::NULL_PTR;
+
 	if (num <= 0)
 		throw error_code::NEGATIVE_COUNT;
 
 	int prime_count = 0;
 
-	for (int i = 2; prime_count != num; i += PARITY_OFFSET) {
-		if (i == 2) {
-			if (!((*arr)[prime_count]))
-				throw error_code::NULL_PTR_ACCESS;
-			(*arr)[prime_count] = i;
-			prime_count++;
-			i++;
+	for (int i = 2; prime_count != num; i += 1) {
+		if (i != 2 && i % 2 == 0)
 			continue;
-		}
+
 		if (isPrime(i)) {
-			if (!((*arr)[prime_count]))
-				throw error_code::NULL_PTR_ACCESS;
-			(*arr)[prime_count] = i;
+			arr[prime_count] = i;
 			prime_count++;
 		}
 	}
 }
 
 
-int main()
-{
+/*
+Get integer input from user
+
+@return the number received from the user
+*/
+int getInt() {
+	int number_input = 0;
+
+	std::cout << "Enter a number to find primes: ";
+
+	if (!(std::cin >> number_input))
+		throw error_code::BAD_INPUT;
+
+	if (number_input <= 0) {
+		throw error_code::NEGATIVE_COUNT;
+	}
+
+	return number_input;
+}
+
+
+int main() {
 	try {
-		int number_input = 0;
+		
 
-		std::cout << "Enter a number to find primes: ";
-
-		if (!(std::cin >> number_input))
-			throw error_code::BAD_INPUT;
-
-		if (number_input <= 0) {
-			throw error_code::NEGATIVE_COUNT;
-		}
+		int number_input = getInt();
 
 		int* arr = new int[number_input];
-		fill_prime(number_input, &arr);
+		fill_prime(number_input, arr);
 
 		for (int i = 0; i < number_input; i++) {
 			std::cout << arr[i] << " ";
 		}
 		
-		free(arr);
+		delete[] arr;
 	}
 	catch (error_code errorCode) {
 		handleError(errorCode);
