@@ -6,6 +6,7 @@ enum error_code {
 	BAD_INPUT,
 };
 
+
 /*
 Handles all error types
 
@@ -21,29 +22,37 @@ void handleError(error_code errorCode) {
 	}
 }
 
+
+int getInt() {
+	int num;
+	std::cout << "Please type a number: " << std::endl;
+	if (!(std::cin >> num)) {
+		throw error_code::BAD_INPUT;
+	}
+
+	return num;
+}
+
+
+
+int getOperator() {
+	char op = 'X';
+	std::cout << "Please type an operator [+,-,*,/]: " << std::endl;
+	if (!(std::cin >> op)) {
+		throw error_code::BAD_INPUT;
+	}
+
+	return op;
+}
+
+
 int main() {
 	try {
-		int num1 = 0;
-		int num2 = 0;
-		char op = 'X';
+		int num1 = getInt();
+		int num2 = getInt();
+		char op = getOperator();
 
-		std::cout << "Please type a number: " << std::endl;
-		if (!(std::cin >> num1)) {
-			throw error_code::BAD_INPUT;
-		}
-
-		std::cout << "Please type a number: " << std::endl;
-		if (!(std::cin >> num2)) {
-			throw error_code::BAD_INPUT;
-		}
-
-		std::cout << "Please type an operator [+,-,*,/]: " << std::endl;
-		if (!(std::cin >> op)) {
-			throw error_code::BAD_INPUT;
-		}
-
-		Calculator calc;
-		std::cout << calc.calculate(num1, op, num2) << std::endl;
+		std::cout << Calculator::calculate(num1, op, num2) << std::endl;
 	}
 	catch (error_code errorCode) {
 		handleError(errorCode);
