@@ -37,8 +37,8 @@ double Calculator::subtract(double num1, double num2) {
 
 
 double Calculator::divide(double num1, double num2) {
-	//if (num2 == 0)
-	//	throw error_code::DIVISION_BY_ZERO;
+	if (num2 == 0)
+		throw error_code::DIVISION_BY_ZERO;
 	return num1 / num2;
 }
 
