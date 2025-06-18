@@ -3,8 +3,6 @@
 
 
 const int MIN_PRIME = 2;
-const int MIN_ODD_PRIME = 3;
-const int PARITY_OFFSET = 2;
 
 enum error_code {
 	SUCCESS,
@@ -69,8 +67,8 @@ void fill_prime(int num, int* arr) {
 
 	int prime_count = 0;
 
-	for (int i = 2; prime_count != num; i += 1) {
-		if (i != 2 && i % 2 == 0)
+	for (int i = MIN_PRIME; prime_count != num; i += 1) {
+		if (i != MIN_PRIME && i % 2 == 0)
 			continue;
 
 		if (isPrime(i)) {
@@ -102,25 +100,39 @@ int getInt() {
 }
 
 
+/*
+Prints a 1d integer array
+
+@param arr Array of integer
+@param length Length of array
+*/
+void printIntegerArray(int *arr, int length) {
+	for (int i = 0; i < length; i++) {
+		std::cout << arr[i] << " ";
+	}
+}
+
+
 int main() {
+	int* arr = nullptr;
 	try {
 		
-
 		int number_input = getInt();
 
-		int* arr = new int[number_input];
+		arr = new int[number_input];
 		fill_prime(number_input, arr);
 
-		for (int i = 0; i < number_input; i++) {
-			std::cout << arr[i] << " ";
-		}
+		printIntegerArray(arr, number_input);
 		
-		delete[] arr;
+		
 	}
 	catch (error_code errorCode) {
 		handleError(errorCode);
 		return errorCode;
 	}
 
+	if (arr != nullptr) {
+		delete[] arr;
+	}
 	return error_code::SUCCESS;
 }
