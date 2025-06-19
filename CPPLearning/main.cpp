@@ -1,10 +1,13 @@
 #include <iostream>
+#include "Exception.h"
 #include "Calculator.h"
 
 enum error_code {
 	SUCCESS,
 	BAD_INPUT,
+	CALC_ERROR,
 };
+
 
 
 /*
@@ -57,5 +60,8 @@ int main() {
 	catch (error_code errorCode) {
 		handleError(errorCode);
 		return errorCode;
+	}
+	catch (Exception exception) {
+		return error_code::CALC_ERROR;
 	}
 }
