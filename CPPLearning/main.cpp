@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Exception.h"
+
 #include "Calculator.h"
 
 enum error_code {
@@ -7,7 +7,6 @@ enum error_code {
 	BAD_INPUT,
 	CALC_ERROR,
 };
-
 
 
 /*
@@ -61,7 +60,8 @@ int main() {
 		handleError(errorCode);
 		return errorCode;
 	}
-	catch (Exception exception) {
+	catch (MyException exception) {
+		std::cerr << "An exception occurred (" << exception.getError() << ")\n";
 		return error_code::CALC_ERROR;
 	}
 }

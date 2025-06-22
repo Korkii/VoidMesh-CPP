@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Exception.h"
+#include "MyException.h"
 #include <string>
+
 
 class Calculator {
 public:
@@ -15,26 +16,17 @@ public:
 	*/
 	static double calculate(double, char op, double);
 
-	class DivisionByZeroException : public Exception {
+	class DivisionByZeroException : public MyException {
 	public:
 		DivisionByZeroException();
 	};
 
-	class InvalidOperatorException : public Exception {
+	class InvalidOperatorException : public MyException {
 	public:
 		InvalidOperatorException();
 	};
 
 private:
-	enum error_code;
-
-	/*
-	Handles errors
-
-	@param errorCode The error code of the error
-	*/
-		
-	static void handleError(error_code errorCode);
 	/*
 	Adds two numbers
 
