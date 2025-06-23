@@ -16,6 +16,8 @@ public:
 	*/
 	static double calculate(double, char op, double);
 
+	virtual ~Calculator() = default;
+
 	class DivisionByZeroException : public MyException {
 	public:
 		DivisionByZeroException();
